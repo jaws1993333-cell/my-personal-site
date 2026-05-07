@@ -16,6 +16,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  other: {
+    "baidu-site-verification": "codeva-f0P86HCrjQ",
+  },
   openGraph: {
     title: `${siteName} | 个人经验型网站`,
     description: defaultDescription,
