@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cases, getCaseBySlug } from "@/app/data/cases";
+import { getCaseDiagramBySlug } from "@/app/data/case-diagrams";
 import { Button, Card, ContactButton, PageShell, SoftSection } from "@/app/components/ui";
 import { absoluteUrl } from "@/app/data/seo";
 
@@ -43,6 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CaseDetailPage({ params }: Props) {
   const { slug } = await params;
   const item = getCaseBySlug(slug);
+  const diagram = getCaseDiagramBySlug(slug);
 
   if (!item) {
     notFound();
@@ -84,36 +86,47 @@ export default async function CaseDetailPage({ params }: Props) {
                 ))}
               </SectionBlock>
 
-              <SectionBlock title="三、适合行业">
+              {diagram ? (
+                <SectionBlock title="三、商业模式讲解图">
+                  <CaseDiagramBlock
+                    title={diagram.title}
+                    subtitle={diagram.subtitle}
+                    takeaway={diagram.takeaway}
+                    steps={diagram.steps}
+                  />
+                </SectionBlock>
+              ) : null}
+
+              <SectionBlock title="四、适合行业">
                 <BulletList items={item.suitableIndustries} />
               </SectionBlock>
 
-              <SectionBlock title="四、客户常见痛点">
+              <SectionBlock title="五、客户常见痛点">
                 <BulletList items={item.commonPainPoints} />
               </SectionBlock>
 
-              <SectionBlock title="五、模式逻辑拆解">
+              <SectionBlock title="六、模式逻辑拆解">
                 <BulletList items={item.logicBreakdown} />
               </SectionBlock>
 
-              <SectionBlock title="六、奖励 / 积分 / 分润规则设计建议">
+              <SectionBlock title="七、奖励 / 积分 / 分润规则设计建议">
                 <BulletList items={item.ruleAdvice} />
               </SectionBlock>
 
-              <SectionBlock title="七、开发前必须确认的问题">
+              <SectionBlock title="八、开发前必须确认的问题">
                 <BulletList items={item.questions} />
               </SectionBlock>
 
-              <SectionBlock title="八、项目价值">
+              <SectionBlock title="九、项目价值">
                 <BulletList items={item.projectValues} />
               </SectionBlock>
 
-              <SectionBlock title="九、适合咨询的客户">
+              <SectionBlock title="十、适合咨询的客户">
                 <BulletList items={item.fitClients} />
               </SectionBlock>
 
               <div className="mt-10 rounded-[1.5rem] bg-emerald-50 p-5 sm:p-6">
-                <p className="break-words text-xl font-semibold text-slate-950">十、联系引导</p>
+                <p className="break-words text-xl font-semibold text-slate-950">十一、联系引导</p>
                 <p className="mt-3 text-sm leading-7 text-slate-700">
                   如果你正在考虑做类似项目，可以先把你的想法发给我。我可以帮你一起梳理业务规则、用户路径、奖励机制和开发前需要确认的问题，避免还没想清楚规则就急着开发。
                 </p>
@@ -175,6 +188,49 @@ function BulletList({ items }: { items: string[] }) {
           <p className="break-words text-sm leading-7 text-slate-700">{item}</p>
         </div>
       ))}
+    </div>
+  );
+}
+
+function CaseDiagramBlock({
+  title,
+  subtitle,
+  takeaway,
+  steps,
+}: {
+  title: string;
+  subtitle: string;
+  takeaway: string;
+  steps: { label: string; detail: string }[];
+}) {
+  return (
+    <div className="overflow-hidden rounded-[1.75rem] border border-emerald-900/15 bg-emerald-50">
+      <div className="border-b border-emerald-900/10 px-5 py-5 sm:px-6">
+        <p className="break-words text-lg font-semibold text-slate-950">{title}</p>
+        <p className="mt-2 text-sm leading-7 text-slate-700">{subtitle}</p>
+      </div>
+      <div className="grid gap-3 p-4 sm:p-5">
+        {steps.map((step, index) => (
+          <div
+            key={step.label}
+            className="rounded-2xl bg-white p-4 shadow-sm shadow-slate-900/5"
+          >
+            <div className="flex items-start gap-3">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-900 text-xs font-semibold text-white">
+                {index + 1}
+              </span>
+              <div className="min-w-0">
+                <p className="break-words text-sm font-semibold text-slate-950">{step.label}</p>
+                <p className="mt-2 break-words text-sm leading-7 text-slate-600">{step.detail}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="border-t border-emerald-900/10 bg-white/70 px-5 py-4 sm:px-6">
+        <p className="text-sm font-semibold text-emerald-950">图解要点</p>
+        <p className="mt-2 text-sm leading-7 text-slate-700">{takeaway}</p>
+      </div>
     </div>
   );
 }
