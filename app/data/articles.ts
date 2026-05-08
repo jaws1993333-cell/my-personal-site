@@ -4,6 +4,7 @@ export type Article = {
   description: string;
   date: string;
   category: string;
+  views: number;
   seoTitle: string;
   seoDescription: string;
   points: string[];
@@ -46,6 +47,7 @@ export const articles: Article[] = [
     description: "很多延期不是开发速度慢，而是前期目标、需求边界、验收标准和决策机制没有说清楚。",
     date: "2026-05-07",
     category: "项目推进",
+    views: 1280,
     seoTitle: "软件项目为什么容易延期？开发前如何降低延期风险",
     seoDescription:
       "软件项目延期常常不是单纯开发速度问题，而是需求边界、验收标准、决策机制和优先级没有提前说清楚。",
@@ -80,6 +82,7 @@ export const articles: Article[] = [
     description: "小程序不是把线下业务搬到手机里，而是要先想清楚用户为什么打开、如何下单、谁来运营。",
     date: "2026-05-07",
     category: "小程序开发",
+    views: 960,
     seoTitle: "企业做小程序开发前要想清楚什么？需求梳理清单",
     seoDescription:
       "企业做小程序开发前，需要先想清楚用户场景、核心流程、后台管理、运营责任和首期功能边界。",
@@ -114,6 +117,7 @@ export const articles: Article[] = [
     description: "靠谱的方案通常能说明取舍，而不是承诺什么都能做、什么都很快、什么都不难。",
     date: "2026-05-07",
     category: "方案判断",
+    views: 720,
     seoTitle: "中小企业如何判断软件开发方案是否靠谱？",
     seoDescription:
       "判断软件开发方案是否靠谱，可以看功能优先级、风险说明、交付阶段、报价边界和沟通方式是否清楚。",
@@ -149,6 +153,7 @@ export const articles: Article[] = [
       "推三返一看起来规则简单，但真正落地到系统开发时，需要提前把业务规则、奖金制度、用户路径、成本测算和风控机制想清楚。",
     date: "2026-05-07",
     category: "商业模式与系统开发",
+    views: 560,
     seoTitle: "推三返一模式系统开发前要注意什么？软件项目落地视角分析",
     seoDescription:
       "推三返一模式看起来规则简单，但真正落地到系统开发时，需要提前考虑业务合规、奖金制度、返利规则、用户路径、订单数据、结算逻辑和风控机制。本文从软件项目落地角度，帮你梳理开发前需要想清楚的问题。",
@@ -235,6 +240,7 @@ export const articles: Article[] = [
       "消费返物业费把业主、物业、商家和平台连接在一起，但开发前要先梳理真实消费、合理分润、抵扣规则、结算周期和风控边界。",
     date: "2026-05-07",
     category: "社区经济与系统开发",
+    views: 380,
     seoTitle: "消费返物业费模式怎么做？社区经济系统开发前的规则梳理",
     seoDescription:
       "消费返物业费模式把业主、物业、商家和平台连接在一起，通过日常消费产生的分润抵扣物业费。本文从软件项目落地角度，分析这种模式的业务逻辑、利益分配、系统规则和开发前需要注意的问题。",
@@ -414,4 +420,14 @@ export function getArticlesByNewest() {
   return [...articles].sort(
     (left, right) => new Date(right.date).getTime() - new Date(left.date).getTime(),
   );
+}
+
+export function getArticlesByPopular() {
+  return [...articles].sort((left, right) => {
+    if (right.views !== left.views) {
+      return right.views - left.views;
+    }
+
+    return new Date(right.date).getTime() - new Date(left.date).getTime();
+  });
 }

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { getArticlesByNewest } from "@/app/data/articles";
+import { getArticlesByNewest, getArticlesByPopular } from "@/app/data/articles";
+import { ArticleList } from "@/app/articles/articles-list";
 import { Button, Card, ContactButton, ContactCta, Hero, PageShell, SectionIntro, SoftSection } from "@/app/components/ui";
 import { absoluteUrl } from "@/app/data/seo";
 
@@ -21,7 +21,8 @@ export const metadata: Metadata = {
 };
 
 export default function ArticlesPage() {
-  const articles = getArticlesByNewest();
+  const latestArticles = getArticlesByNewest();
+  const popularArticles = getArticlesByPopular();
 
   return (
     <PageShell>
@@ -45,45 +46,11 @@ export default function ArticlesPage() {
             有问题想让我写？
           </Button>
         </div>
-
-        <div className="mt-8 grid gap-5">
-          {articles.map((article, index) => (
-            <article key={article.slug} className="rounded-[1.75rem] border border-stone-200 bg-white/86 p-5 shadow-sm shadow-slate-900/5 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-900/8 sm:p-6">
-              <div className="grid gap-5 lg:grid-cols-[0.28fr_1fr_0.3fr] lg:items-start">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.24em] text-emerald-800">
-                    Note 0{index + 1}
-                  </p>
-                  <p className="mt-3 w-fit rounded-full bg-[#f8f4ec] px-3 py-2 text-xs font-semibold text-slate-600">
-                    {article.category}
-                  </p>
-                </div>
-                <div>
-                  <Link href={`/articles/${article.slug}`} className="group">
-                    <h2 className="text-2xl font-semibold leading-tight text-slate-950 group-hover:text-emerald-900">
-                      {article.title}
-                    </h2>
-                  </Link>
-                  <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base sm:leading-8">
-                    {article.description}
-                  </p>
-                  <div className="mt-5 grid gap-2 sm:grid-cols-3">
-                    {article.points.map((point) => (
-                      <p key={point} className="rounded-2xl bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-700">
-                        {point}
-                      </p>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex flex-col gap-3 lg:items-end">
-                  <span className="text-sm text-slate-500">{article.date}</span>
-                  <Button href={`/articles/${article.slug}`} variant="ghost" className="border border-stone-200 bg-white">
-                    阅读全文
-                  </Button>
-                </div>
-              </div>
-            </article>
-          ))}
+        <div className="mt-8">
+          <ArticleList
+            latestArticles={latestArticles}
+            popularArticles={popularArticles}
+          />
         </div>
       </SoftSection>
       <ContactCta
