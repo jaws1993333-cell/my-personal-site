@@ -417,17 +417,37 @@ export function getArticleBySlug(slug: string) {
 }
 
 export function getArticlesByNewest() {
-  return [...articles].sort(
-    (left, right) => new Date(right.date).getTime() - new Date(left.date).getTime(),
-  );
+  return [...articles]
+    .map((article, index) => ({ article, index }))
+    .sort((left, right) => {
+      const dateDiff =
+        new Date(right.article.date).getTime() - new Date(left.article.date).getTime();
+
+      if (dateDiff !== 0) {
+        return dateDiff;
+      }
+
+      return right.index - left.index;
+    })
+    .map(({ article }) => article);
 }
 
 export function getArticlesByPopular() {
-  return [...articles].sort((left, right) => {
-    if (right.views !== left.views) {
-      return right.views - left.views;
-    }
+  return [...articles]
+    .map((article, index) => ({ article, index }))
+    .sort((left, right) => {
+      if (right.article.views !== left.article.views) {
+        return right.article.views - left.article.views;
+      }
 
-    return new Date(right.date).getTime() - new Date(left.date).getTime();
-  });
+      const dateDiff =
+        new Date(right.article.date).getTime() - new Date(left.article.date).getTime();
+
+      if (dateDiff !== 0) {
+        return dateDiff;
+      }
+
+      return right.index - left.index;
+    })
+    .map(({ article }) => article);
 }
