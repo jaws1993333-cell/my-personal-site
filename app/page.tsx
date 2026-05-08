@@ -85,6 +85,28 @@ export default function Home() {
       </section>
 
       <SoftSection>
+        <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <SectionIntro
+            eyebrow="Common Questions"
+            title="开发前，很多项目其实先卡在这些问题上"
+            description="这些问题越早说清楚，后面找开发、看报价、排周期、验收交付都会更稳。"
+          />
+          <div className="grid gap-3">
+            {[
+              "这个系统第一版到底要解决哪一个核心业务问题？",
+              "哪些功能必须首期做，哪些功能可以等业务跑通后再加？",
+              "业务规则、结算规则、退款规则和异常情况是否已经写清楚？",
+              "预算、周期、运营成本和后续维护压力是否匹配当前阶段？",
+            ].map((item) => (
+              <Card key={item} className="border-l-4 border-l-emerald-800">
+                <p className="text-base font-semibold leading-7 text-slate-900">{item}</p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </SoftSection>
+
+      <SoftSection>
         <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <SectionIntro eyebrow="Services" title="服务方向" />
           <ContactButton label="先简单聊聊" />

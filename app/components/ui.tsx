@@ -14,7 +14,7 @@ type ButtonVariant = "primary" | "secondary" | "ghost";
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-[#f8f4ec]/88 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
         <Link href="/" className="group flex w-fit items-center gap-3">
           <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-slate-950 text-sm font-semibold tracking-[-0.08em] text-white shadow-lg shadow-slate-950/15">
@@ -70,7 +70,7 @@ export function SiteFooter() {
 
 export function PageShell({ children }: { children: ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col bg-[#f8f4ec] text-slate-900">
+    <div className="flex min-h-screen flex-col bg-[#f7f7f3] text-slate-900">
       <SiteHeader />
       <main className="flex-1">{children}</main>
       <SiteFooter />
@@ -91,16 +91,16 @@ export function Button({
 }) {
   const styles = {
     primary:
-      "bg-emerald-900 text-white shadow-sm shadow-emerald-950/10 hover:bg-emerald-800",
+      "bg-emerald-900 text-white shadow-sm hover:bg-emerald-800",
     secondary:
-      "border border-slate-300 bg-white/85 text-slate-800 hover:border-emerald-900 hover:text-emerald-900",
+      "border border-slate-300 bg-white text-slate-800 hover:border-emerald-900 hover:text-emerald-900",
     ghost: "bg-transparent text-slate-700 hover:bg-white hover:text-slate-950",
   };
 
   return (
     <Link
       href={href}
-      className={`inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5 ${styles[variant]} ${className}`}
+      className={`inline-flex items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5 ${styles[variant]} ${className}`}
     >
       {children}
     </Link>
@@ -173,7 +173,7 @@ export function Card({
   className?: string;
 }) {
   return (
-    <div className={`rounded-[1.75rem] border border-stone-200/90 bg-white/82 p-5 shadow-sm shadow-slate-900/5 backdrop-blur sm:p-6 ${className}`}>
+    <div className={`rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-900/4 sm:p-6 ${className}`}>
       {children}
     </div>
   );
@@ -193,13 +193,11 @@ export function Hero({
   aside?: ReactNode;
 }) {
   return (
-    <section className="relative overflow-hidden border-b border-stone-200">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_16%,rgba(22,101,52,0.15),transparent_28%),radial-gradient(circle_at_90%_12%,rgba(120,53,15,0.11),transparent_30%),linear-gradient(135deg,#f8f4ec_0%,#eef4ee_48%,#fff8eb_100%)]" />
-      <div className="absolute left-0 top-0 h-full w-full opacity-[0.08] [background-image:linear-gradient(#0f172a_1px,transparent_1px),linear-gradient(90deg,#0f172a_1px,transparent_1px)] [background-size:44px_44px]" />
-      <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:px-8 lg:py-24">
+    <section className="border-b border-slate-200 bg-white">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:px-8 lg:py-20">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.28em] text-emerald-900/80">{eyebrow}</p>
-          <h1 className="mt-5 text-4xl font-semibold leading-[1.08] tracking-tight text-slate-950 sm:text-6xl">
+          <h1 className="mt-5 text-4xl font-semibold leading-[1.12] tracking-tight text-slate-950 sm:text-6xl">
             {title}
           </h1>
           <p className="mt-6 max-w-3xl text-base leading-8 text-slate-700 sm:text-lg sm:leading-9">
@@ -230,14 +228,14 @@ export function ContactCta({
 }) {
   return (
     <SoftSection className="pt-0">
-      <div className="overflow-hidden rounded-[2rem] bg-emerald-900 text-white shadow-xl shadow-emerald-950/10">
+      <div className="overflow-hidden rounded-2xl border border-emerald-900/20 bg-white text-slate-900 shadow-sm">
         <div className="grid gap-6 p-7 sm:p-10 md:grid-cols-[1.25fr_0.75fr] md:items-center">
           <div>
             <p className="text-2xl font-semibold sm:text-3xl">{title}</p>
-            <p className="mt-4 max-w-3xl leading-8 text-emerald-50">{description}</p>
+            <p className="mt-4 max-w-3xl leading-8 text-slate-600">{description}</p>
           </div>
           <div className="md:text-right">
-            <Button href="/contact" className="bg-white text-emerald-950 hover:bg-emerald-50">
+            <Button href="/contact">
               找我聊聊项目想法
             </Button>
           </div>
