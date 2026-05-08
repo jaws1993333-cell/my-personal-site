@@ -12,10 +12,38 @@
   --font-mono: "Cascadia Code", Consolas, monospace;
 }
 
+html {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
   background: var(--background);
   color: var(--foreground);
   font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+}
+
+img,
+svg,
+video,
+canvas,
+iframe {
+  display: block;
+  max-width: 100%;
+}
+
+pre,
+code {
+  word-break: break-word;
 }
 
 ::selection {

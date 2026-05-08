@@ -25,7 +25,7 @@ export function ArticleList({
 
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
-      <div>
+      <div className="min-w-0">
         <div className="flex flex-wrap items-center gap-3">
           {sortOptions.map((option) => {
             const active = option.key === sortKey;
@@ -51,9 +51,9 @@ export function ArticleList({
           {articles.map((article, index) => (
             <article
               key={article.slug}
-              className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-900/4 transition hover:-translate-y-0.5 hover:shadow-md sm:p-6"
+              className="min-w-0 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-900/4 transition hover:-translate-y-0.5 hover:shadow-md sm:p-6"
             >
-              <div className="grid gap-5 lg:grid-cols-[0.24fr_minmax(0,1fr)_0.32fr] lg:items-start">
+              <div className="grid min-w-0 gap-5 lg:grid-cols-[0.24fr_minmax(0,1fr)_0.32fr] lg:items-start">
                 <div className="flex flex-row flex-wrap items-center gap-3 lg:block">
                   <p className="text-xs font-bold uppercase tracking-[0.24em] text-emerald-800">
                     Note {String(index + 1).padStart(2, "0")}
@@ -65,7 +65,7 @@ export function ArticleList({
 
                 <div className="min-w-0">
                   <Link href={`/articles/${article.slug}`} className="group">
-                    <h2 className="text-xl font-semibold leading-tight text-slate-950 transition group-hover:text-emerald-900 sm:text-2xl">
+                    <h2 className="break-words text-xl font-semibold leading-tight text-slate-950 transition group-hover:text-emerald-900 sm:text-2xl">
                       {article.title}
                     </h2>
                   </Link>
@@ -93,7 +93,7 @@ export function ArticleList({
         </div>
       </div>
 
-      <aside className="lg:sticky lg:top-24">
+      <aside className="min-w-0 lg:sticky lg:top-24">
         <Card>
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-800">
             热门文章
@@ -108,7 +108,7 @@ export function ArticleList({
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">
                   Top {index + 1}
                 </p>
-                <p className="mt-2 text-base font-semibold leading-7 text-slate-900">
+                <p className="mt-2 break-words text-base font-semibold leading-7 text-slate-900">
                   {article.title}
                 </p>
                 <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-slate-500">

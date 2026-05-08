@@ -36,8 +36,8 @@ export default function ContactPage() {
       </Hero>
 
       <SoftSection>
-        <div className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
-          <Card className="p-6 sm:p-8">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:items-start">
+          <Card className="min-w-0 p-6 sm:p-8">
             <p className="text-xs font-bold uppercase tracking-[0.24em] text-emerald-800">
               Start Simple
             </p>
@@ -61,7 +61,7 @@ export default function ContactPage() {
             </div>
           </Card>
 
-          <Card className="p-6 sm:p-8">
+          <Card className="min-w-0 p-6 sm:p-8">
             <h2 className="text-2xl font-semibold text-slate-950">联系方式</h2>
             <div className="mt-6 space-y-4">
               <ContactLine label="手机号" value={contact.phone} href={`tel:${contact.phone}`} />
@@ -84,18 +84,18 @@ export default function ContactPage() {
 function QrCard() {
   return (
     <Card className="bg-white/78">
-      <div className="grid gap-5 sm:grid-cols-[10rem_1fr] sm:items-center lg:grid-cols-1">
+      <div className="grid min-w-0 gap-5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:items-center lg:grid-cols-1">
         <div className="w-fit rounded-[1.5rem] bg-white p-3 shadow-sm shadow-slate-900/8">
           <Image
             src="/wechat-qr.png"
             alt="微信二维码"
             width={180}
             height={180}
-            className="h-40 w-40 rounded-2xl object-cover sm:h-44 sm:w-44"
+            className="h-36 w-36 rounded-2xl object-cover sm:h-40 sm:w-40"
             priority
           />
         </div>
-        <div>
+        <div className="min-w-0">
           <p className="text-sm font-semibold text-slate-950">微信扫码联系</p>
           <p className="mt-2 text-sm leading-7 text-slate-600">
             微信号：<span className="font-semibold text-slate-950">{contact.wechat}</span>
@@ -121,7 +121,7 @@ function ContactLine({
   const content = (
     <>
       <p className="text-xs font-semibold tracking-[0.18em] text-slate-400">{label}</p>
-      <p className="mt-2 text-lg font-semibold text-slate-900">{value}</p>
+      <p className="mt-2 break-all text-lg font-semibold text-slate-900">{value}</p>
     </>
   );
 

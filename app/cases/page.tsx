@@ -37,14 +37,14 @@ export default function CasesPage() {
           {cases.map((item, index) => (
             <article
               key={item.slug}
-              className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white/86 shadow-sm shadow-slate-900/5 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-900/8"
+              className="min-w-0 overflow-hidden rounded-[2rem] border border-stone-200 bg-white/86 shadow-sm shadow-slate-900/5 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-900/8"
             >
-              <div className="grid gap-0 lg:grid-cols-[0.8fr_1.2fr]">
-                <Link href={`/cases/${item.slug}`} className="block border-b border-stone-200 bg-slate-950 p-6 text-white sm:p-8 lg:border-b-0 lg:border-r">
+              <div className="grid min-w-0 gap-0 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+                <Link href={`/cases/${item.slug}`} className="block min-w-0 border-b border-stone-200 bg-slate-950 p-6 text-white sm:p-8 lg:border-b-0 lg:border-r">
                   <p className="text-xs font-bold uppercase tracking-[0.26em] text-emerald-200">
                     Case 0{index + 1}
                   </p>
-                  <h2 className="mt-4 text-2xl font-semibold leading-tight">{item.title}</h2>
+                  <h2 className="mt-4 break-words text-2xl font-semibold leading-tight">{item.title}</h2>
                   <p className="mt-4 text-sm leading-7 text-slate-300">{item.industry}</p>
                   <div className="mt-6 rounded-2xl border border-white/10 bg-white/10 p-4">
                     <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">适合关注</p>
@@ -53,7 +53,7 @@ export default function CasesPage() {
                     </p>
                   </div>
                 </Link>
-                <div className="p-5 sm:p-8">
+                <div className="min-w-0 p-5 sm:p-8">
                   <div className="grid gap-4 md:grid-cols-2">
                     <Info title="客户痛点" text={item.pain} />
                     <Info title="解决方案" text={item.solution} />
@@ -64,7 +64,7 @@ export default function CasesPage() {
                     <p className="text-sm font-semibold text-slate-950">核心功能</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {item.features.map((feature) => (
-                        <span key={feature} className="rounded-full bg-white px-3 py-2 text-sm text-slate-700 shadow-sm shadow-slate-900/5">
+                        <span key={feature} className="break-words rounded-full bg-white px-3 py-2 text-sm text-slate-700 shadow-sm shadow-slate-900/5">
                           {feature}
                         </span>
                       ))}
