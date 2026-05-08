@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { articles } from "@/app/data/articles";
+import { getArticlesByNewest } from "@/app/data/articles";
 import { Button, Card, ContactButton, ContactCta, Hero, PageShell, SectionIntro, SoftSection } from "@/app/components/ui";
 import { absoluteUrl } from "@/app/data/seo";
 
@@ -21,6 +21,8 @@ export const metadata: Metadata = {
 };
 
 export default function ArticlesPage() {
+  const articles = getArticlesByNewest();
+
   return (
     <PageShell>
       <Hero
