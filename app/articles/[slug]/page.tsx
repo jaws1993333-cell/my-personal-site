@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { articles, getArticleBySlug } from "@/app/data/articles";
+import { articles, getArticleBySlug, type ArticleVisual } from "@/app/data/articles";
 import { Button, Card, ContactButton, PageShell, SoftSection } from "@/app/components/ui";
 import { absoluteUrl } from "@/app/data/seo";
 
@@ -88,6 +88,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                         </p>
                       ))}
                     </div>
+                    {section.visual ? <ArticleVisualBlock visual={section.visual} /> : null}
                   </section>
                 ))}
               </div>
@@ -119,5 +120,76 @@ export default async function ArticleDetailPage({ params }: Props) {
         </SoftSection>
       </article>
     </PageShell>
+  );
+}
+
+function ArticleVisualBlock({ visual }: { visual: ArticleVisual }) {
+  if (visual.type === "relationship") {
+    return (
+      <div className="mt-6 rounded-2xl border border-emerald-900/15 bg-emerald-50 p-5">
+        <p className="text-lg font-semibold text-slate-950">{visual.title}</p>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          {visual.items.map((item) => (
+            <div key={item.role} className="rounded-2xl bg-white p-4 shadow-sm shadow-slate-900/5">
+              <p className="text-sm font-semibold text-emerald-900">{item.role}</p>
+              <p className="mt-2 text-sm leading-7 text-slate-700">{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (visual.type === "table") {
+    return (
+      <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+        <div className="bg-slate-950 px-5 py-4 text-white">
+          <p className="text-lg font-semibold">{visual.title}</p>
+          <p className="mt-2 text-sm leading-6 text-slate-300">{visual.note}</p>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[40rem] border-collapse text-left text-sm">
+            <thead className="bg-slate-50 text-slate-600">
+              <tr>
+                <th className="border-b border-slate-200 px-5 py-3 font-semibold">项目</th>
+                <th className="border-b border-slate-200 px-5 py-3 font-semibold">示例金额</th>
+                <th className="border-b border-slate-200 px-5 py-3 font-semibold">说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              {visual.rows.map((row) => (
+                <tr key={row.label} className="odd:bg-white even:bg-slate-50/70">
+                  <td className="border-b border-slate-100 px-5 py-4 font-semibold text-slate-900">
+                    {row.label}
+                  </td>
+                  <td className="border-b border-slate-100 px-5 py-4 text-emerald-900">
+                    {row.value}
+                  </td>
+                  <td className="border-b border-slate-100 px-5 py-4 text-slate-600">
+                    {row.description}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+      <p className="text-lg font-semibold text-slate-950">{visual.title}</p>
+      <div className="mt-4 grid gap-3">
+        {visual.items.map((item, index) => (
+          <div key={item} className="flex gap-3 rounded-2xl bg-white p-4 shadow-sm shadow-slate-900/5">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-900 text-xs font-semibold text-white">
+              {index + 1}
+            </span>
+            <p className="text-sm leading-7 text-slate-700">{item}</p>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
