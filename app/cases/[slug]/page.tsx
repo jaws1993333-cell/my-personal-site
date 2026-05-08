@@ -24,20 +24,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const description = `${item.title}案例拆解，行业方向：${item.industry}。包含客户痛点、解决方案、核心功能、项目价值和适合咨询的客户。`;
-
   return {
-    title: `${item.title}案例`,
-    description,
+    title: item.seoTitle,
+    description: item.seoDescription,
     alternates: {
       canonical: absoluteUrl(`/cases/${item.slug}`),
     },
     openGraph: {
-      title: `${item.title}案例 | 业务系统需求拆解`,
-      description,
+      title: item.seoTitle,
+      description: item.seoDescription,
       url: absoluteUrl(`/cases/${item.slug}`),
       type: "article",
-      tags: [item.industry],
+      tags: [item.industry, ...item.suitableIndustries],
     },
   };
 }
@@ -66,52 +64,82 @@ export default async function CaseDetailPage({ params }: Props) {
               {item.title}
             </h1>
             <p className="mt-5 max-w-3xl text-base leading-8 text-slate-700 sm:text-lg sm:leading-9">
-              这类项目的关键不只是功能开发，而是先把业务流程、角色权限、运营规则和交付边界梳理清楚。
+              {item.summary}
             </p>
           </div>
         </section>
 
         <SoftSection>
           <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start">
-            <div className="min-w-0 rounded-[2rem] border border-stone-200 bg-white/88 p-5 shadow-sm shadow-slate-900/5 sm:p-8 lg:p-9">
-              <div className="grid gap-5">
-                <DetailBlock title="客户痛点" text={item.pain} />
-                <DetailBlock title="解决方案" text={item.solution} />
-                <DetailBlock title="项目价值" text={item.value} />
-                <DetailBlock title="适合咨询的客户" text={item.fit} />
-              </div>
+            <div className="min-w-0 rounded-[2rem] border border-stone-200 bg-white/90 p-5 shadow-sm shadow-slate-900/5 sm:p-8 lg:p-9">
+              <SectionBlock title="一、案例标题">
+                <p className="break-words text-lg leading-8 text-slate-700">{item.title}</p>
+              </SectionBlock>
 
-              <section className="mt-8 rounded-[1.5rem] bg-[#f8f4ec] p-5 sm:p-6">
-                <h2 className="text-xl font-semibold text-slate-950">核心功能</h2>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {item.features.map((feature) => (
-                    <span
-                      key={feature}
-                      className="break-words rounded-full bg-white px-4 py-2 text-sm text-slate-700 shadow-sm shadow-slate-900/5"
-                    >
-                      {feature}
-                    </span>
-                  ))}
-                </div>
-              </section>
+              <SectionBlock title="二、模式简介">
+                {item.intro.map((paragraph) => (
+                  <p key={paragraph} className="break-words text-[15px] leading-8 text-slate-700 sm:text-base">
+                    {paragraph}
+                  </p>
+                ))}
+              </SectionBlock>
+
+              <SectionBlock title="三、适合行业">
+                <BulletList items={item.suitableIndustries} />
+              </SectionBlock>
+
+              <SectionBlock title="四、客户常见痛点">
+                <BulletList items={item.commonPainPoints} />
+              </SectionBlock>
+
+              <SectionBlock title="五、模式逻辑拆解">
+                <BulletList items={item.logicBreakdown} />
+              </SectionBlock>
+
+              <SectionBlock title="六、奖励 / 积分 / 分润规则设计建议">
+                <BulletList items={item.ruleAdvice} />
+              </SectionBlock>
+
+              <SectionBlock title="七、开发前必须确认的问题">
+                <BulletList items={item.questions} />
+              </SectionBlock>
+
+              <SectionBlock title="八、项目价值">
+                <BulletList items={item.projectValues} />
+              </SectionBlock>
+
+              <SectionBlock title="九、适合咨询的客户">
+                <BulletList items={item.fitClients} />
+              </SectionBlock>
 
               <div className="mt-10 rounded-[1.5rem] bg-emerald-50 p-5 sm:p-6">
-                <p className="break-words text-xl font-semibold text-slate-950">你也在准备类似项目？</p>
+                <p className="break-words text-xl font-semibold text-slate-950">十、联系引导</p>
                 <p className="mt-3 text-sm leading-7 text-slate-700">
-                  可以先发我业务背景、当前想法和最担心的问题，我会帮你一起判断需求边界、开发路径和前期风险。
+                  如果你正在考虑做类似项目，可以先把你的想法发给我。我可以帮你一起梳理业务规则、用户路径、奖励机制和开发前需要确认的问题，避免还没想清楚规则就急着开发。
                 </p>
                 <div className="mt-5">
-                  <ContactButton label="发我你的需求" />
+                  <ContactButton label="找我聊聊项目想法" />
                 </div>
               </div>
             </div>
 
             <aside className="min-w-0 lg:sticky lg:top-28">
               <Card>
-                <p className="text-sm font-semibold text-slate-950">适合先聊的问题</p>
-                <p className="mt-3 text-sm leading-7 text-slate-600">
-                  如果你也在规划类似系统，可以先从业务流程、首期功能、预算周期和开发风险这几个问题开始梳理。
-                </p>
+                <p className="text-sm font-semibold text-slate-950">这类案例先看什么</p>
+                <div className="mt-4 space-y-3">
+                  {[
+                    item.focus,
+                    item.value,
+                    item.fit,
+                  ].map((point) => (
+                    <p
+                      key={point}
+                      className="break-words rounded-2xl bg-[#f8f4ec] px-4 py-3 text-sm leading-6 text-slate-700"
+                    >
+                      {point}
+                    </p>
+                  ))}
+                </div>
               </Card>
             </aside>
           </div>
@@ -121,11 +149,32 @@ export default async function CaseDetailPage({ params }: Props) {
   );
 }
 
-function DetailBlock({ title, text }: { title: string; text: string }) {
+function SectionBlock({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
-    <section className="min-w-0 rounded-[1.5rem] border border-stone-200 bg-white p-5">
-      <h2 className="break-words text-xl font-semibold text-slate-950">{title}</h2>
-      <p className="mt-3 break-words text-base leading-8 text-slate-700">{text}</p>
+    <section className="min-w-0 border-b border-stone-200/80 py-7 last:border-b-0 last:pb-0 first:pt-0">
+      <h2 className="break-words text-2xl font-semibold tracking-tight text-slate-950">{title}</h2>
+      <div className="mt-4 space-y-4">{children}</div>
     </section>
+  );
+}
+
+function BulletList({ items }: { items: string[] }) {
+  return (
+    <div className="grid gap-3">
+      {items.map((item, index) => (
+        <div key={item} className="flex gap-3 rounded-2xl bg-slate-50 p-4">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-900 text-xs font-semibold text-white">
+            {index + 1}
+          </span>
+          <p className="break-words text-sm leading-7 text-slate-700">{item}</p>
+        </div>
+      ))}
+    </div>
   );
 }
