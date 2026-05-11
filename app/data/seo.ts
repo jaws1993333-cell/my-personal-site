@@ -1,5 +1,5 @@
 export const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://my-personal-site-theta-olive.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://mingtu.lzyunli.com";
 
 export const siteName = "软件项目咨询与需求梳理";
 
